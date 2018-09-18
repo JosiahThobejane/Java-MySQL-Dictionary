@@ -1,7 +1,7 @@
 package josionary;
 
 /*
- * @author Josiah
+ * @author Josiah Thobejane
  */
 
 
@@ -9,18 +9,22 @@ import java.sql.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 
-public class Engine extends Josionary {
-    
+public class Engine{
+
+    static DefaultListModel<String> dWordsList;
+    Josionary josionary = new Josionary();
     String connString = "jdbc:mysql://localhost:3306/josionary?";
     String cred = "user=root&password=";
-            
+    
     //Josionary josionary = new Josionary();
     Connection conn;
     
     public Engine()
     {
+        
         //instantiate objects
         try {            
             //use the imported JDBC library.
@@ -32,6 +36,7 @@ public class Engine extends Josionary {
         
         catch(ClassNotFoundException | SQLException e )
         {
+            //print the errors list on the console
             e.printStackTrace();
         }
         
@@ -48,35 +53,27 @@ public class Engine extends Josionary {
     //show words in the LIST
     public void showWords()
     {
-        String words[] = {"Humans", "Animals", "Insects", "Marines"};
-        
-        
-        //josionary.wordsList.setListData(listData);
-        Josionary jos = new Josionary();
-        //wordsList = new JList<>(words);
-        wordsList.setListData(words);
+               
+        //retrieve words from the database and add them to the JList
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM wordsdata LIMIT 10");            
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM wordsdata LIMIT 10");
             
             ResultSet rs = ps.executeQuery();
             
             while(rs.next())
             {
-                String theWord = rs.getString("Word");
-                String theDes = rs.getString("WORD_DES");
+                String word = rs.getString("Word");
+                String worddes = rs.getString("WORD_DES");
+                dWordsList.addElement(word);
+                System.out.println("Word: " + word);
                 
-                //jos.descriptionField.setText(theDes);
-                
-                System.out.println("WORD: " + theWord + ": Description: " + theDes);
-            }
-            
-            JOptionPane.showMessageDialog(null, "WORDS LOADED");
-        }          
-        
-        catch (SQLException ee)
+            }            
+        }
+        catch(SQLException ee)
         {
         
-        }
+    }
+
     }
     
     //Add new word to the database
@@ -93,6 +90,9 @@ public class Engine extends Josionary {
                 JOptionPane.showMessageDialog(null, "Word Added");                                
             else
                 JOptionPane.showMessageDialog(null, "WORD NOT ADDED");
+            
+            //close the connection
+            conn.close();
         }
         
         catch (SQLException e)
@@ -109,9 +109,22 @@ public class Engine extends Josionary {
             
             ps.setString(1, theWord);
            
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "DONE");
+            switch(ps.executeUpdate()) 
+            {
+                case 1: 
+                    JOptionPane.showMessageDialog(null, "DONE: ' " + theWord + " ' has been deleted");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "ERROR");
+                    break;
+            }
+                    
+               
+            
+            
+            conn.close();
         }
+        
         
         catch(SQLException e)
         {
@@ -130,6 +143,8 @@ public class Engine extends Josionary {
             
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "DONE");
+            
+            conn.close();
         }
         
         catch(SQLException e)
@@ -145,6 +160,8 @@ public class Engine extends Josionary {
             
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "DONE");
+            
+            conn.close();
         }
         
         catch(SQLException e)

@@ -5,7 +5,18 @@
  */
 package josionary;
 
+import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import static josionary.Engine.dWordsList;
 
 /**
  *
@@ -14,11 +25,14 @@ import javax.swing.JOptionPane;
 public class Josionary extends javax.swing.JFrame {
 
     
+    
     /**
-     * Creates new form Josionary
+     * Creates new form 
      */
     public Josionary() {
         initComponents();
+        
+       
     }
 
     /**
@@ -30,14 +44,14 @@ public class Josionary extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        wordsList = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        descriptionField = new javax.swing.JTextArea();
+        wordDescription = new javax.swing.JTextArea();
         searchField = new javax.swing.JTextField();
         addwordBTN = new javax.swing.JButton();
         searchBTN = new javax.swing.JButton();
         manageDataBTN = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        wordsList = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -56,16 +70,10 @@ public class Josionary extends javax.swing.JFrame {
             }
         });
 
-        wordsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(wordsList);
-
-        descriptionField.setColumns(20);
-        descriptionField.setRows(5);
-        jScrollPane2.setViewportView(descriptionField);
+        wordDescription.setEditable(false);
+        wordDescription.setColumns(20);
+        wordDescription.setRows(5);
+        jScrollPane2.setViewportView(wordDescription);
 
         searchField.setText("SEARCH");
 
@@ -91,6 +99,10 @@ public class Josionary extends javax.swing.JFrame {
                 manageDataBTNActionPerformed(evt);
             }
         });
+
+        wordsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        wordsList.setToolTipText("");
+        jScrollPane1.setViewportView(wordsList);
 
         jMenu1.setText("File");
 
@@ -130,8 +142,8 @@ public class Josionary extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,8 +167,8 @@ public class Josionary extends javax.swing.JFrame {
                     .addComponent(searchBTN))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addwordBTN)
@@ -197,8 +209,64 @@ public class Josionary extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
       
-        Engine engine = new Engine();
-        engine.showWords();
+       Engine engine = new Engine();
+       //engine.showWords();
+    //wordDescription.setText("Josiah The Goat");
+    
+        DefaultListModel<String> listM = new DefaultListModel<>();
+        
+               
+        //retrieve words from the database and add them to the JList
+        try {
+            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata");
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                String word = rs.getString("Word");
+               
+                //add words to the list model
+                listM.addElement(word);                
+            }            
+        }
+        catch(SQLException ee)
+        {
+        
+        }        
+        //populate the JList with words from the database
+        wordsList.setModel(listM);
+       
+        wordsList.addListSelectionListener((ListSelectionEvent event) -> {
+            if(!event.getValueIsAdjusting())
+            {
+                System.out.println("Curr Selected: " + wordsList.getSelectedIndex());
+                
+                //retrieve the selected word description from the database
+                
+                try {
+                    
+                    PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata");
+                    
+                    ResultSet result = ps.executeQuery(); 
+                    
+                    
+                    while(result.next())
+                    {
+                        wordDescription.setText("Jksk");
+                        
+                        
+                    }
+                    
+                }
+                
+                catch(SQLException ee)
+                {
+                    ee.printStackTrace();
+                }                                                
+            }
+       });
+      
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -238,7 +306,6 @@ public class Josionary extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addwordBTN;
-    public javax.swing.JTextArea descriptionField;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
@@ -250,6 +317,7 @@ public class Josionary extends javax.swing.JFrame {
     public javax.swing.JButton manageDataBTN;
     public javax.swing.JButton searchBTN;
     public javax.swing.JTextField searchField;
+    public javax.swing.JTextArea wordDescription;
     public javax.swing.JList<String> wordsList;
     // End of variables declaration//GEN-END:variables
 }
