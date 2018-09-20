@@ -47,7 +47,6 @@ public class Engine{
     public void searchWord(String word)
     {        
         
-        //descriptionField.setText(word);
     }
     
     
