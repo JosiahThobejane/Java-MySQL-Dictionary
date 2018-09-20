@@ -31,6 +31,7 @@ public class DeleteWord extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Delete Word - Josionary");
 
         jToggleButton1.setText("DELETE");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {

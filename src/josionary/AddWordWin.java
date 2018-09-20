@@ -35,7 +35,7 @@ public class AddWordWin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Word");
+        setTitle("Add New Word - Josionary");
         setName("Add New Word - Josionary"); // NOI18N
 
         wordDescription.setColumns(20);
