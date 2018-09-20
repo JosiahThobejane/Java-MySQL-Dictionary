@@ -5,18 +5,11 @@
  */
 package josionary;
 
-import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import static josionary.Engine.dWordsList;
 
 /**
  *
@@ -207,18 +200,17 @@ public class Josionary extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowActivated
 
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
       
        Engine engine = new Engine();
-       //engine.showWords();
-    //wordDescription.setText("Josiah The Goat");
-    
-        DefaultListModel<String> listM = new DefaultListModel<>();
+      
+       DefaultListModel<String> listM = new DefaultListModel<>();
         
                
         //retrieve words from the database and add them to the JList
         try {
-            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata");
+            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
             
             ResultSet rs = ps.executeQuery();
             
@@ -237,27 +229,22 @@ public class Josionary extends javax.swing.JFrame {
         //populate the JList with words from the database
         wordsList.setModel(listM);
        
+        
+        //this event updates a word description once a specific word has been selected, in real-time.
         wordsList.addListSelectionListener((ListSelectionEvent event) -> {
             if(!event.getValueIsAdjusting())
             {
-                System.out.println("Curr Selected: " + wordsList.getSelectedIndex());
-                
-                //retrieve the selected word description from the database
-                
-                try {
-                    
-                    PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata");
-                    
+               
+                //retrieve the selected word description from the database                
+                try {                   
+                    PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + wordsList.getSelectedValue() + "'" );
+                        
                     ResultSet result = ps.executeQuery(); 
-                    
-                    
+                                        
                     while(result.next())
-                    {
-                        wordDescription.setText("Jksk");
-                        
-                        
-                    }
-                    
+                    {                        
+                        wordDescription.setText(result.getString("WORD_DES"));                        
+                    }                    
                 }
                 
                 catch(SQLException ee)
@@ -269,6 +256,7 @@ public class Josionary extends javax.swing.JFrame {
       
     }//GEN-LAST:event_formWindowOpened
 
+    
     /**
      * @param args the command line arguments
      */

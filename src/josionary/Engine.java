@@ -14,7 +14,7 @@ import javax.swing.ListModel;
 
 public class Engine{
 
-    static DefaultListModel<String> dWordsList;
+    
     Josionary josionary = new Josionary();
     String connString = "jdbc:mysql://localhost:3306/josionary?";
     String cred = "user=root&password=";
@@ -50,31 +50,6 @@ public class Engine{
         //descriptionField.setText(word);
     }
     
-    //show words in the LIST
-    public void showWords()
-    {
-               
-        //retrieve words from the database and add them to the JList
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM wordsdata LIMIT 10");
-            
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next())
-            {
-                String word = rs.getString("Word");
-                String worddes = rs.getString("WORD_DES");
-                dWordsList.addElement(word);
-                System.out.println("Word: " + word);
-                
-            }            
-        }
-        catch(SQLException ee)
-        {
-        
-    }
-
-    }
     
     //Add new word to the database
     public void addWord(String theWord, String theWordDes)
