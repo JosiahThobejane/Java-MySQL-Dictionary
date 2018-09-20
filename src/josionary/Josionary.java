@@ -41,9 +41,11 @@ public class Josionary extends javax.swing.JFrame {
         searchField = new javax.swing.JTextField();
         addwordBTN = new javax.swing.JButton();
         searchBTN = new javax.swing.JButton();
-        manageDataBTN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         wordsList = new javax.swing.JList<>();
+        updateWordBTN = new javax.swing.JButton();
+        deleteWordBTN = new javax.swing.JButton();
+        deleteAllWordsBTN = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -84,17 +86,33 @@ public class Josionary extends javax.swing.JFrame {
             }
         });
 
-        manageDataBTN.setText("Manage Data");
-        manageDataBTN.setName("addwordBTN"); // NOI18N
-        manageDataBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manageDataBTNActionPerformed(evt);
-            }
-        });
-
         wordsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         wordsList.setToolTipText("");
         jScrollPane1.setViewportView(wordsList);
+
+        updateWordBTN.setText("Update Word");
+        updateWordBTN.setName("addwordBTN"); // NOI18N
+        updateWordBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateWordBTNActionPerformed(evt);
+            }
+        });
+
+        deleteWordBTN.setText("Delete Word");
+        deleteWordBTN.setName("addwordBTN"); // NOI18N
+        deleteWordBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteWordBTNActionPerformed(evt);
+            }
+        });
+
+        deleteAllWordsBTN.setText("Delete All Words");
+        deleteAllWordsBTN.setName("addwordBTN"); // NOI18N
+        deleteAllWordsBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAllWordsBTNActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -139,9 +157,12 @@ public class Josionary extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addwordBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(manageDataBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 259, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(updateWordBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteWordBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteAllWordsBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(searchField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,7 +183,9 @@ public class Josionary extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addwordBTN)
-                    .addComponent(manageDataBTN))
+                    .addComponent(updateWordBTN)
+                    .addComponent(deleteWordBTN)
+                    .addComponent(deleteAllWordsBTN))
                 .addContainerGap())
         );
 
@@ -181,11 +204,6 @@ public class Josionary extends javax.swing.JFrame {
         AddWordWin addWord = new AddWordWin();
         addWord.show(); 
     }//GEN-LAST:event_addwordBTNActionPerformed
-
-    private void manageDataBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageDataBTNActionPerformed
-        ManageData md = new ManageData();
-        md.show();
-    }//GEN-LAST:event_manageDataBTNActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
         
@@ -281,6 +299,21 @@ public class Josionary extends javax.swing.JFrame {
       
     }//GEN-LAST:event_formWindowOpened
 
+    private void updateWordBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateWordBTNActionPerformed
+        UpdateWord up = new UpdateWord();
+        up.show();
+    }//GEN-LAST:event_updateWordBTNActionPerformed
+
+    private void deleteWordBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteWordBTNActionPerformed
+        DeleteWord dl = new DeleteWord();
+        dl.show();       
+        
+    }//GEN-LAST:event_deleteWordBTNActionPerformed
+
+    private void deleteAllWordsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAllWordsBTNActionPerformed
+        //this is gonna be just a sql command
+    }//GEN-LAST:event_deleteAllWordsBTNActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -319,6 +352,8 @@ public class Josionary extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addwordBTN;
+    public javax.swing.JButton deleteAllWordsBTN;
+    public javax.swing.JButton deleteWordBTN;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
@@ -327,9 +362,9 @@ public class Josionary extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JButton manageDataBTN;
     public javax.swing.JButton searchBTN;
     public javax.swing.JTextField searchField;
+    public javax.swing.JButton updateWordBTN;
     public javax.swing.JTextArea wordDescription;
     public javax.swing.JList<String> wordsList;
     // End of variables declaration//GEN-END:variables
