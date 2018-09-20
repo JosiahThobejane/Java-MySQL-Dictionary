@@ -24,8 +24,7 @@ public class Josionary extends javax.swing.JFrame {
      */
     public Josionary() {
         initComponents();
-        
-       
+               
     }
 
     /**
@@ -68,7 +67,7 @@ public class Josionary extends javax.swing.JFrame {
         wordDescription.setRows(5);
         jScrollPane2.setViewportView(wordDescription);
 
-        searchField.setText("SEARCH");
+        searchField.setText("SEARCH WORD");
 
         addwordBTN.setText("Add Word");
         addwordBTN.setName("addwordBTN"); // NOI18N
@@ -139,16 +138,14 @@ public class Josionary extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addwordBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(manageDataBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(searchBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(addwordBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(manageDataBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 259, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(searchField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,9 +188,37 @@ public class Josionary extends javax.swing.JFrame {
     }//GEN-LAST:event_manageDataBTNActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
+        
+        //holds the word a user is trying to search for
+        String word = searchField.getText();
+                
         Engine engine = new Engine();
         
-        engine.searchWord(searchField.getText());             
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        
+        try {
+            
+            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata "
+                    + "WHERE Word LIKE '%" + word 
+                    + "' OR Word LIKE '%" + word + "%'"
+                    + "OR Word LIKE '" + word +"%' OR Word='" + word + "'");
+            
+            ResultSet res = ps.executeQuery();
+            
+            while(res.next())
+            {               
+                //populate the listmodel with the searched word(s)
+                listModel.addElement(res.getString("Word"));
+            }
+           
+            //parse the words to the JList
+            wordsList.setModel(listModel);
+        }
+        
+        catch(SQLException s)
+        {
+        
+        }           
     }//GEN-LAST:event_searchBTNActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
