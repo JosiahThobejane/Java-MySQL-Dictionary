@@ -55,6 +55,8 @@ public class Josionary extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Josionary");
+        setLocation(new java.awt.Point(150, 150));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -231,11 +233,13 @@ public class Josionary extends javax.swing.JFrame {
            
             //parse the words to the JList
             wordsList.setModel(listModel);
+            
+            //close the connection
+            engine.conn.close();
         }
         
         catch(SQLException s)
-        {
-        
+        {        
         }           
     }//GEN-LAST:event_searchBTNActionPerformed
 
@@ -246,13 +250,12 @@ public class Josionary extends javax.swing.JFrame {
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
       
-       Engine engine = new Engine();
-      
+       Engine engine = new Engine();      
        DefaultListModel<String> listM = new DefaultListModel<>();
-        
-               
+                       
         //retrieve words from the database and add them to the JList
-        try {
+        try 
+        {
             PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
             
             ResultSet rs = ps.executeQuery();
@@ -263,11 +266,11 @@ public class Josionary extends javax.swing.JFrame {
                
                 //add words to the list model
                 listM.addElement(word);                
-            }            
+            }                         
         }
         catch(SQLException ee)
         {
-        
+            System.out.println(ee);
         }        
         //populate the JList with words from the database
         wordsList.setModel(listM);
@@ -276,10 +279,10 @@ public class Josionary extends javax.swing.JFrame {
         //this event updates a word description once a specific word has been selected, in real-time.
         wordsList.addListSelectionListener((ListSelectionEvent event) -> {
             if(!event.getValueIsAdjusting())
-            {
-               
+            {               
                 //retrieve the selected word description from the database                
-                try {                   
+                try 
+                {                   
                     PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + wordsList.getSelectedValue() + "'" );
                         
                     ResultSet result = ps.executeQuery(); 
@@ -287,7 +290,7 @@ public class Josionary extends javax.swing.JFrame {
                     while(result.next())
                     {                        
                         wordDescription.setText(result.getString("WORD_DES"));                        
-                    }                    
+                    }                                          
                 }
                 
                 catch(SQLException ee)
@@ -312,6 +315,19 @@ public class Josionary extends javax.swing.JFrame {
 
     private void deleteAllWordsBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAllWordsBTNActionPerformed
         //this is gonna be just a sql command
+        //the command deletes all words.
+        Engine eng = new Engine();
+        
+        try 
+        {            
+            PreparedStatement ps = eng.conn.prepareStatement("DELETE * FROM wordsdata");
+            ps.executeUpdate();
+            
+            eng.conn.close();
+        }
+        catch(SQLException ee)
+        {
+        }
     }//GEN-LAST:event_deleteAllWordsBTNActionPerformed
 
     

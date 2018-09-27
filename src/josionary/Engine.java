@@ -38,8 +38,7 @@ public class Engine{
         {
             //print the errors list on the console
             e.printStackTrace();
-        }
-        
+        }        
     }
             
     
@@ -71,6 +70,7 @@ public class Engine{
         
         catch (SQLException e)
         {
+            JOptionPane.showMessageDialog(null, "ERROR: " + e);
         }
     }
     
