@@ -1,11 +1,4 @@
-## Josionary - JAVA, MySQL & JDBC Project
-![Josionary Main Window](assets/img/josionary.png)
-
-Josionary is a dictionary software made in Java using the JDBC API and MySQL, it is currently not available as a standalone application, it can however be ran in Netbeans IDE and other IDEs that can open Java projects.
-
-###### Please note that this is a Developer Release, those not familiar with programming might face problems with setting this up ;-) .
-    
-## How To Setup Josionary.
+   ## How To Setup Josionary.
 - You need to have the JDK 8+ installed.
 - Netbeans IDE 8+ installed
 - MySQL Server: WAMP or XAMPP can do the trick :) . 
