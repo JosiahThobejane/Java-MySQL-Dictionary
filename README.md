@@ -28,6 +28,6 @@ Josionary is a dictionary software made in Java using the JDBC API and MySQL, it
 
 ###### Should you encounter some issues, feel free to contact me or report and Issue and I will get back to you ASAP! ...enjoy :)
 ---
-> Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane) 
+> Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane)
 
 
