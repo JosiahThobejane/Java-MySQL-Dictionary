@@ -10,15 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Josiah
  */
 public class Josionary extends javax.swing.JFrame {
-
-    
-    
+        
     /**
      * Creates new form 
      */
@@ -207,13 +206,14 @@ public class Josionary extends javax.swing.JFrame {
         addWord.show(); 
     }//GEN-LAST:event_addwordBTNActionPerformed
 
+    //search a word
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
         
         //holds the word a user is trying to search for
         String word = searchField.getText();
                 
         Engine engine = new Engine();
-        
+                
         DefaultListModel<String> listModel = new DefaultListModel<>();
         
         try {
@@ -238,8 +238,8 @@ public class Josionary extends javax.swing.JFrame {
             engine.conn.close();
         }
         
-        catch(SQLException s)
-        {        
+        catch(SQLException s) {        
+            JOptionPane.showMessageDialog(null, "Error Occured");
         }           
     }//GEN-LAST:event_searchBTNActionPerformed
 
@@ -268,9 +268,8 @@ public class Josionary extends javax.swing.JFrame {
                 listM.addElement(word);                
             }                         
         }
-        catch(SQLException ee)
-        {
-            System.out.println(ee);
+        catch(SQLException ee) {
+           JOptionPane.showMessageDialog(null, ee.toString());
         }        
         //populate the JList with words from the database
         wordsList.setModel(listM);
@@ -293,9 +292,8 @@ public class Josionary extends javax.swing.JFrame {
                     }                                          
                 }
                 
-                catch(SQLException ee)
-                {
-                    ee.printStackTrace();
+                catch(SQLException ee) {
+                    JOptionPane.showMessageDialog(null, ee.toString());
                 }                                                
             }
        });
@@ -325,8 +323,8 @@ public class Josionary extends javax.swing.JFrame {
             
             eng.conn.close();
         }
-        catch(SQLException ee)
-        {
+        catch(SQLException ee) {
+            JOptionPane.showMessageDialog(null, ee.toString());
         }
     }//GEN-LAST:event_deleteAllWordsBTNActionPerformed
 

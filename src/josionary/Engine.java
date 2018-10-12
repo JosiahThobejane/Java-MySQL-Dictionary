@@ -4,51 +4,37 @@ package josionary;
  * @author Josiah Thobejane
  */
 
-
 import java.sql.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 
-
 public class Engine{
-
     
     Josionary josionary = new Josionary();
     String connString = "jdbc:mysql://localhost:3306/josionary?";
     String cred = "user=root&password=";
-    
-    //Josionary josionary = new Josionary();
+        
     Connection conn;
     
     public Engine()
-    {
-        
+    {        
         //instantiate objects
         try {            
             //use the imported JDBC library.
             Class.forName("com.mysql.jdbc.Driver");
-            
+
             //establish a new database connection
             conn = DriverManager.getConnection(connString + cred); 
         }
         
-        catch(ClassNotFoundException | SQLException e )
-        {
+        catch (ClassNotFoundException | SQLException e ) {
             //print the errors list on the console
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.printStackTrace());
         }        
     }
             
-    
-    //search a word
-    public void searchWord(String word)
-    {        
-        
-    }
-    
-    
     //Add new word to the database
     public void addWord(String theWord, String theWordDes)
     {        
@@ -68,8 +54,7 @@ public class Engine{
             conn.close();
         }
         
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERROR: " + e);
         }
     }
@@ -89,19 +74,15 @@ public class Engine{
                     JOptionPane.showMessageDialog(null, "DONE: ' " + theWord + " ' has been deleted");
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "ERROR");
+                    JOptionPane.showMessageDialog(null, "Word Has Not Been Added");
                     break;
-            }
-                    
-               
-            
-            
+            }                                                           
             conn.close();
         }
         
         
-        catch(SQLException e)
-        {
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error Occured");
         }        
     }
     
@@ -121,8 +102,8 @@ public class Engine{
             conn.close();
         }
         
-        catch(SQLException e)
-        {
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error Occured");
         }
     }        
     
@@ -138,8 +119,8 @@ public class Engine{
             conn.close();
         }
         
-        catch(SQLException e)
-        {
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error Occured");
         }
     }
 }

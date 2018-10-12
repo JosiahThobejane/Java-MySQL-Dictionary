@@ -4,6 +4,6 @@
 (UPDATE COMING SOON)
     
 ---
-> Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane) 
+> Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane)
 
 
