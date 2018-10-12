@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+
 public class UpdateWord extends javax.swing.JFrame {
 
     /**
@@ -17,8 +18,7 @@ public class UpdateWord extends javax.swing.JFrame {
     public UpdateWord() {
         initComponents();
         
-        //run this before showing the window
-        
+        //run this before showing the window        
         Engine engine = new Engine();      
         DefaultListModel<String> listM = new DefaultListModel<>();
                        
@@ -37,9 +37,8 @@ public class UpdateWord extends javax.swing.JFrame {
                 listM.addElement(word);                
             }                         
         }
-        catch(SQLException ee)
-        {
-            System.out.println(ee);
+        catch(SQLException ee) {
+            JOptionPane.showMessageDialog(null, ee.toString());
         }        
         
         //populate the JList with words from the database
@@ -51,22 +50,21 @@ public class UpdateWord extends javax.swing.JFrame {
             if(!event.getValueIsAdjusting())
                 {
                     //retrieve the selected word description from the database                
-                try 
-                {                   
-                    PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + WordsTXT.getSelectedValue() + "'" );
-                        
-                    ResultSet result = ps.executeQuery(); 
-                                        
-                    while(result.next())
-                    {                        
-                        wordDescriptionTXT.setText(result.getString("WORD_DES"));                        
-                    }                                          
-                }
-                
-                catch(SQLException ee)
-                {
-                    ee.printStackTrace();
-                }       
+                    try 
+                    {                   
+                        PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + WordsTXT.getSelectedValue() + "'" );
+                            
+                        ResultSet result = ps.executeQuery(); 
+                                            
+                        while(result.next())
+                        {                        
+                            wordDescriptionTXT.setText(result.getString("WORD_DES"));                        
+                        }                                          
+                    }
+                    
+                    catch(SQLException ee) {
+                        JOptionPane.showMessageDialog(null, ee.toString());
+                    }       
                 }
         
         });
@@ -171,26 +169,25 @@ public class UpdateWord extends javax.swing.JFrame {
         Engine engine = new Engine();
         
         try {
-        PreparedStatement ps = engine.conn.prepareStatement("UPDATE wordsdata SET WORD_DES=? WHERE Word=?");
-              
-        ps.setString(1, wordDescriptionTXT.getText());
-        ps.setString(2, WordsTXT.getSelectedValue());
+            PreparedStatement ps = engine.conn.prepareStatement("UPDATE wordsdata SET WORD_DES=? WHERE Word=?");
                 
-        //returns 1 when the database has been updated, 0 when it has not been updated
-        switch(ps.executeUpdate())
-        {
-            case 1:
-                JOptionPane.showMessageDialog(null, "The word: " + WordsTXT.getSelectedValue() + " has been updated with a new description" );
-                break;
-            case 0:
-                JOptionPane.showMessageDialog(null, "The word " + WordsTXT.getSelectedValue() + " has NOT been updated");
-                break;
-        }
+            ps.setString(1, wordDescriptionTXT.getText());
+            ps.setString(2, WordsTXT.getSelectedValue());
+                    
+            //returns 1 when the database has been updated, 0 when it has not been updated
+            switch(ps.executeUpdate())
+            {
+                case 1:
+                    JOptionPane.showMessageDialog(null, "The word: " + WordsTXT.getSelectedValue() + " has been updated with a new description" );
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(null, "The word " + WordsTXT.getSelectedValue() + " has NOT been updated");
+                    break;
+            }
                 
         }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }//GEN-LAST:event_submitUpdateBTNActionPerformed
 
