@@ -4,7 +4,7 @@ Josionary is a dictionary software made in Java using the JDBC API and MySQL, it
 
 #### Please note that this is a Developer Release, those not familiar with programming might face problems with setting this up.
 
-![Josionary](assets/img/josionary.png)
+![Josionary](https://github.com/JosiahThobejane/Java-MySQL-Dictionary/blob/master/assets/img/josionary.PNG)
 
 # How To Setup Josionary.
 - You need to have the JDK 8+ installed.
