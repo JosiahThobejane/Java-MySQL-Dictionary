@@ -27,9 +27,7 @@ public class Engine{
 
             //establish a new database connection
             conn = DriverManager.getConnection(connString + cred); 
-        }
-        
-        catch (ClassNotFoundException | SQLException e ) {
+        } catch (ClassNotFoundException | SQLException e ) {
             //print the errors list on the console
             JOptionPane.showMessageDialog(null, e.printStackTrace());
         }        
@@ -38,8 +36,7 @@ public class Engine{
     //Add new word to the database
     public void addWord(String theWord, String theWordDes)
     {        
-        try {
-            
+        try {            
             PreparedStatement ps = conn.prepareStatement("INSERT INTO wordsdata (Word, WORD_DES) VALUES (?, ?)");
             
             ps.setString(1, theWord);
@@ -52,9 +49,7 @@ public class Engine{
             
             //close the connection
             conn.close();
-        }
-        
-        catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERROR: " + e);
         }
     }
@@ -62,8 +57,7 @@ public class Engine{
     //delete a certain word
     public void deleteWord(String theWord)
     {
-        try {
-            
+        try {            
             PreparedStatement ps = conn.prepareStatement("DELETE FROM wordsdata WHERE Word=?");
             
             ps.setString(1, theWord);
@@ -78,10 +72,7 @@ public class Engine{
                     break;
             }                                                           
             conn.close();
-        }
-        
-        
-        catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error Occured");
         }        
     }
@@ -100,9 +91,7 @@ public class Engine{
             JOptionPane.showMessageDialog(null, "DONE");
             
             conn.close();
-        }
-        
-        catch(SQLException e) {
+        } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error Occured");
         }
     }        
@@ -117,9 +106,7 @@ public class Engine{
             JOptionPane.showMessageDialog(null, "DONE");
             
             conn.close();
-        }
-        
-        catch(SQLException e) {
+        } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error Occured");
         }
     }
