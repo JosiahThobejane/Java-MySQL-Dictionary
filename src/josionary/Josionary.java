@@ -22,8 +22,7 @@ public class Josionary extends javax.swing.JFrame {
      * Creates new form 
      */
     public Josionary() {
-        initComponents();
-               
+        initComponents();               
     }
 
     /**
@@ -216,8 +215,7 @@ public class Josionary extends javax.swing.JFrame {
                 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         
-        try {
-            
+        try {            
             PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata "
                     + "WHERE Word LIKE '%" + word 
                     + "' OR Word LIKE '%" + word + "%'"
@@ -236,9 +234,7 @@ public class Josionary extends javax.swing.JFrame {
             
             //close the connection
             engine.conn.close();
-        }
-        
-        catch(SQLException s) {        
+        } catch(SQLException s) {        
             JOptionPane.showMessageDialog(null, "Error Occured");
         }           
     }//GEN-LAST:event_searchBTNActionPerformed
@@ -254,8 +250,7 @@ public class Josionary extends javax.swing.JFrame {
        DefaultListModel<String> listM = new DefaultListModel<>();
                        
         //retrieve words from the database and add them to the JList
-        try 
-        {
+        try {
             PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
             
             ResultSet rs = ps.executeQuery();
@@ -267,8 +262,7 @@ public class Josionary extends javax.swing.JFrame {
                 //add words to the list model
                 listM.addElement(word);                
             }                         
-        }
-        catch(SQLException ee) {
+        } catch(SQLException ee) {
            JOptionPane.showMessageDialog(null, ee.toString());
         }        
         //populate the JList with words from the database
@@ -280,8 +274,7 @@ public class Josionary extends javax.swing.JFrame {
             if(!event.getValueIsAdjusting())
             {               
                 //retrieve the selected word description from the database                
-                try 
-                {                   
+                try {                   
                     PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + wordsList.getSelectedValue() + "'" );
                         
                     ResultSet result = ps.executeQuery(); 
@@ -290,9 +283,7 @@ public class Josionary extends javax.swing.JFrame {
                     {                        
                         wordDescription.setText(result.getString("WORD_DES"));                        
                     }                                          
-                }
-                
-                catch(SQLException ee) {
+                } catch(SQLException ee) {
                     JOptionPane.showMessageDialog(null, ee.toString());
                 }                                                
             }
@@ -316,14 +307,12 @@ public class Josionary extends javax.swing.JFrame {
         //the command deletes all words.
         Engine eng = new Engine();
         
-        try 
-        {            
+        try {            
             PreparedStatement ps = eng.conn.prepareStatement("DELETE * FROM wordsdata");
             ps.executeUpdate();
             
             eng.conn.close();
-        }
-        catch(SQLException ee) {
+        } catch(SQLException ee) {
             JOptionPane.showMessageDialog(null, ee.toString());
         }
     }//GEN-LAST:event_deleteAllWordsBTNActionPerformed
