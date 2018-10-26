@@ -27,5 +27,11 @@ Josionary is a dictionary software made in Java using the JDBC API and MySQL, it
 	- e.g `String cred = "user=YourDatabaseAlias&password=YourPassword";`
 
 #### Should you encounter some issues, feel free to contact me or report and Issue and I will get back to you ASAP! ...enjoy :)
+
+# Josionary - JAVA & MySQL Dictionary
+
+##### This Project uses the *JDBC [Java Database Connectivity]* Library
+(UPDATE COMING SOON)
+    
 ---
 > Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane)  Version: 0.2 
