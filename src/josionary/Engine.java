@@ -14,7 +14,7 @@ public class Engine{
     
     Josionary josionary = new Josionary();
     String connString = "jdbc:mysql://localhost:3306/josionary?";
-    String cred = "user=root&password=";
+    String cred = "user=YourUsername&password=YourPassword";
         
     Connection conn;
     
@@ -29,7 +29,7 @@ public class Engine{
             conn = DriverManager.getConnection(connString + cred); 
         } catch (ClassNotFoundException | SQLException e ) {
             //print the errors list on the console
-            JOptionPane.showMessageDialog(null, e.printStackTrace());
+            JOptionPane.showMessageDialog(null, "Database driver not found - Could not connect");
         }        
     }
             
