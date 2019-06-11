@@ -10,4 +10,4 @@ Josionary is a dictionary software made in Java using the JDBC API with SQLlite,
 
 #### Should you encounter some issues, feel free to contact me or report and Issue and I will get back to you ASAP! ...enjoy :)
 ---
-> Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane)  Version: 0.2 
+> Author:  [Josiah Thobejane](http://twitter.com/josiahthobejane)  Version: 0.3
