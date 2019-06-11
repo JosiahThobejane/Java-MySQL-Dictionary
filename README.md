@@ -8,9 +8,9 @@ Josionary is a dictionary software made in Java using the JDBC API and MySQL, it
 
 # How To Setup Josionary.
 - You need to have the JDK 8+ installed.
-- Netbeans IDE 8+ installed
-- MySQL Server: WAMP or XAMPP can do the trick :) . 
+- Just open the Project with your favourite IDE and run the Project :-)
 
+> If You Want To Use MySQL
 #### Creating A Database:
 - Create a new database and name it as you like. 
 - Create a table in your database and name it `wordsdata`
