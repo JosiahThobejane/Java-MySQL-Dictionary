@@ -12,32 +12,40 @@ import javax.swing.ListModel;
 
 public class Engine{
     
-    Josionary josionary = new Josionary();
-    String connString = "jdbc:mysql://localhost:3306/josionary?";
-    String cred = "user=YourUsername&password=YourPassword";
-        
-    Connection conn;
-    
+    Josionary josionary = new Josionary();    
+    Connection connection;
+    Statement statement = null;
     public Engine()
     {        
-        //instantiate objects
+        //setup the database
         try {            
             //use the imported JDBC library.
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.sqlite.JDBC");
 
             //establish a new database connection
-            conn = DriverManager.getConnection(connString + cred); 
-        } catch (ClassNotFoundException | SQLException e ) {
-            //print the errors list on the console
-            JOptionPane.showMessageDialog(null, "Database driver not found - Could not connect");
+            connection = DriverManager.getConnection("jdbc:sqlite:josionary.db"); 
+            
+            setupDatabase();
+        } catch (ClassNotFoundException | SQLException e ) {            
+            JOptionPane.showMessageDialog(null, e.getClass().getName() + "\n\n " + e.getMessage()  + "\n\n : Database driver not found - Could not connect");
         }        
     }
-            
+    
+    //setup our database upon start
+    public final void setupDatabase() throws SQLException
+    {
+        statement = connection.createStatement();
+        String createWordsTable = "CREATE TABLE IF NOT EXISTS wordsdata " +
+                                "(Word VARCHAR(50) NOT NULL," +
+                                "WORD_DES VARCHAR(250) NOT NULL)";
+        statement.executeUpdate(createWordsTable);
+        statement.close();        
+    }
     //Add new word to the database
     public void addWord(String theWord, String theWordDes)
     {        
         try {            
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO wordsdata (Word, WORD_DES) VALUES (?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO wordsdata (Word, WORD_DES) VALUES (?, ?)");
             
             ps.setString(1, theWord);
             ps.setString(2, theWordDes);
@@ -48,7 +56,7 @@ public class Engine{
                 JOptionPane.showMessageDialog(null, "WORD NOT ADDED");
             
             //close the connection
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERROR: " + e);
         }
@@ -58,7 +66,7 @@ public class Engine{
     public void deleteWord(String theWord)
     {
         try {            
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM wordsdata WHERE Word=?");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM wordsdata WHERE Word=?");
             
             ps.setString(1, theWord);
            
@@ -71,7 +79,7 @@ public class Engine{
                     JOptionPane.showMessageDialog(null, "Word Has Not Been Added");
                     break;
             }                                                           
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error Occured");
         }        
@@ -82,7 +90,7 @@ public class Engine{
     {
         try {
             
-            PreparedStatement ps = conn.prepareStatement("UPDATE wordsdata SET Word=? WHERE Word=?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE wordsdata SET Word=? WHERE Word=?");
             
             ps.setString(1, newWord);
             ps.setString(2, oldWord);
@@ -90,7 +98,7 @@ public class Engine{
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "DONE");
             
-            conn.close();
+            connection.close();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error Occured");
         }
@@ -100,12 +108,12 @@ public class Engine{
     public void deleteAll()
     {
         try {            
-            PreparedStatement ps = conn.prepareStatement("DELETE * FROM wordsdata");
+            PreparedStatement ps = connection.prepareStatement("DELETE * FROM wordsdata");
             
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "DONE");
             
-            conn.close();
+            connection.close();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Error Occured");
         }

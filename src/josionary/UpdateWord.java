@@ -25,7 +25,7 @@ public class UpdateWord extends javax.swing.JFrame {
         //retrieve words from the database and add them to the JList
         try 
         {
-            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
+            PreparedStatement ps = engine.connection.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
             
             ResultSet rs = ps.executeQuery();
             
@@ -52,7 +52,7 @@ public class UpdateWord extends javax.swing.JFrame {
                     //retrieve the selected word description from the database                
                     try 
                     {                   
-                        PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + WordsTXT.getSelectedValue() + "'" );
+                        PreparedStatement ps = engine.connection.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + WordsTXT.getSelectedValue() + "'" );
                             
                         ResultSet result = ps.executeQuery(); 
                                             
@@ -169,7 +169,7 @@ public class UpdateWord extends javax.swing.JFrame {
         Engine engine = new Engine();
         
         try {
-            PreparedStatement ps = engine.conn.prepareStatement("UPDATE wordsdata SET WORD_DES=? WHERE Word=?");
+            PreparedStatement ps = engine.connection.prepareStatement("UPDATE wordsdata SET WORD_DES=? WHERE Word=?");
                 
             ps.setString(1, wordDescriptionTXT.getText());
             ps.setString(2, WordsTXT.getSelectedValue());

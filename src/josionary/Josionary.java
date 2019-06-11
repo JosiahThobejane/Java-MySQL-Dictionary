@@ -216,7 +216,7 @@ public class Josionary extends javax.swing.JFrame {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         
         try {            
-            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata "
+            PreparedStatement ps = engine.connection.prepareStatement("SELECT * FROM wordsdata "
                     + "WHERE Word LIKE '%" + word 
                     + "' OR Word LIKE '%" + word + "%'"
                     + "OR Word LIKE '" + word +"%' OR Word='" + word + "'");
@@ -233,7 +233,7 @@ public class Josionary extends javax.swing.JFrame {
             wordsList.setModel(listModel);
             
             //close the connection
-            engine.conn.close();
+            engine.connection.close();
         } catch(SQLException s) {        
             JOptionPane.showMessageDialog(null, "Error Occured");
         }           
@@ -251,7 +251,7 @@ public class Josionary extends javax.swing.JFrame {
                        
         //retrieve words from the database and add them to the JList
         try {
-            PreparedStatement ps = engine.conn.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
+            PreparedStatement ps = engine.connection.prepareStatement("SELECT * FROM wordsdata ORDER BY Word ASC");
             
             ResultSet rs = ps.executeQuery();
             
@@ -275,7 +275,7 @@ public class Josionary extends javax.swing.JFrame {
             {               
                 //retrieve the selected word description from the database                
                 try {                   
-                    PreparedStatement ps = engine.conn.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + wordsList.getSelectedValue() + "'" );
+                    PreparedStatement ps = engine.connection.prepareStatement("SELECT WORD_DES FROM wordsdata WHERE Word='" + wordsList.getSelectedValue() + "'" );
                         
                     ResultSet result = ps.executeQuery(); 
                                         
@@ -308,10 +308,10 @@ public class Josionary extends javax.swing.JFrame {
         Engine eng = new Engine();
         
         try {            
-            PreparedStatement ps = eng.conn.prepareStatement("DELETE * FROM wordsdata");
+            PreparedStatement ps = eng.connection.prepareStatement("DELETE * FROM wordsdata");
             ps.executeUpdate();
             
-            eng.conn.close();
+            eng.connection.close();
         } catch(SQLException ee) {
             JOptionPane.showMessageDialog(null, ee.toString());
         }
